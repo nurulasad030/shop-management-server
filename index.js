@@ -19,12 +19,34 @@ async function run(){
 
     try{
         const productCollection = client.db('mongodbProductsDb').collection('products');
-        const product = {
-            name : '13 pro max',
-            price : 'BDT-155,000'
-        }
+
+        // read 
+        app.get('/products',async (req,res)=>{
+            const query = {};
+            const cursor = productCollection.find(query);
+            const products  = await cursor.toArray();
+            res.send(products);
+        })
+
+
+
+        // create 
+
+      app.post('/products',async (req,res)=>{
+        const product = req.body;
+        console.log(product);
         const result = await productCollection.insertOne(product);
-        console.log(result);
+        res.send(result);
+      })
+
+        
+
+
+        //  update 
+
+        // delete 
+
+
 
     }
     finally{
